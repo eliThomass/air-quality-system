@@ -1,7 +1,8 @@
 from django.urls import path
+from .views import get_sensor_data_12h, post_sensor_data
 
-from . import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("history/", get_sensor_data_12h),
+    path("upload/", post_sensor_data),
 ]
