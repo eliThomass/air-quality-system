@@ -34,3 +34,5 @@ def post_sensor_data(request):
         return JsonResponse({"status": "success", "id": reading.id}, status=201)
     except Exception as e:
         return JsonResponse({"status": "error", "message": str(e)}, status=400)
+
+
