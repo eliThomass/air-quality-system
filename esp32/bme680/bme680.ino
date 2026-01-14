@@ -1,6 +1,6 @@
 #include <Wire.h>
 // Below 3 are for posting to database
-#include <Wifi.h>
+#include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include <Adafruit_Sensor.h>
@@ -24,7 +24,7 @@ Adafruit_BME680 bme;
 void setup() {
   Serial.begin(115200);
 
-  if(!bme.begin) {
+  if(!bme.begin()) {
     Serial.println("Could not find BME680");
     while(1);
   }
