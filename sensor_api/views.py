@@ -5,7 +5,7 @@ import json
 from .models import BmeData
 
 def get_sensor_data_12h(request):
-    latest_data_reads = BmeData.objects.order_by("-read_at")[:47]
+    latest_data_reads = BmeData.objects.order_by("-read_at")[:96]
 
     data_list = []
     for entry in latest_data_reads:

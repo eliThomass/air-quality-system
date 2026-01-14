@@ -19,6 +19,7 @@ function Dashboard() {
     const [readings, setReadings] = useState<SensorReading[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
+    const [showRaw, setShowRaw] = useState<boolean>(false);
 
     const [visible, setVisible] = useState({
         temp: true,
@@ -69,7 +70,7 @@ function Dashboard() {
                 <ResponsiveContainer width="100%" height="85%">
                     <LineChart data={readings}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
-                        <XAxis dataKey="read_at" tickFormatter={formatTime} hide={dataKey !== 'gas_resistance'} />
+                        <XAxis dataKey="read_at" tickFormatter={formatTime} /> 
                         <YAxis domain={['auto', 'auto']} />
                         <ReferenceArea 
                             y1={yMin} 
@@ -90,16 +91,47 @@ function Dashboard() {
 
     return (
         <div className='dashboard-container'>
-            
-            <h1 className="dashboard-header">BME680 Enviornmental Metrics</h1>
-
-            <div className='graphs-grid'>
-                <SimpleChart title="Temperature" dataKey="temperature" color="#ef4444" unit="°F" yMin={68} yMax={76} />
-                <SimpleChart title="Humidity" dataKey="humidity" color="#3b82f6" unit="%" yMin={30} yMax={50} />
-                <SimpleChart title="Pressure" dataKey="pressure" color="#10b981" unit="hPa" yMin={1000} yMax={1020} />
-                <SimpleChart title="Gas Resistance" dataKey="gas_resistance" color="#f59e0b" unit="Ω" yMin={50000} yMax={500000} />
+            <div className='header-row'> 
+                <h1 className="dashboard-header">BME680 Enviornmental Metrics</h1>
+                <button className='toggle-btn' onClick={() => setShowRaw(!showRaw)}>
+                    {showRaw ? "Show Graphs" : "View Raw SQL Data"}
+                </button>
             </div>
 
+
+            {showRaw ? (
+                <div className='raw-data-table'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Temp (°F)</th>
+                                <th>Hum (%)</th>
+                                <th>Press (hPa)</th>
+                                <th>Gas (Ω)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {readings.map(r => (
+                                <tr key={r.id}>
+                                    <td>{new Date(r.read_at).toLocaleString()}</td>
+                                    <td>{((r.temperature * 9/5) + 32).toFixed(1)}</td>
+                                    <td>{r.humidity.toFixed(1)}</td>
+                                    <td>{r.pressure.toFixed(1)}</td>
+                                    <td>{r.gas_resistance.toLocaleString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ) : (
+                <div className='graphs-grid'>
+                    <SimpleChart title="Temperature" dataKey="temperature" color="#ef4444" unit="°F" yMin={68} yMax={76} />
+                    <SimpleChart title="Humidity" dataKey="humidity" color="#3b82f6" unit="%" yMin={30} yMax={50} />
+                    <SimpleChart title="Pressure" dataKey="pressure" color="#10b981" unit="hPa" yMin={1000} yMax={1020} />
+                    <SimpleChart title="Gas Resistance" dataKey="gas_resistance" color="#f59e0b" unit="Ω" yMin={50000} yMax={500000} />
+                </div>
+            )}
         </div>
     );
 }
