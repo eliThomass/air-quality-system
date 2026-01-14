@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import Dashboard from './Dashboard';
 
 function App() {
-
   return (
     <>
+        <div className='app-container'>
+            <Dashboard />
+        </div>
     </>
   )
 }
