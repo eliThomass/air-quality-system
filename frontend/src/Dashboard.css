@@ -1,0 +1,63 @@
+
+
+.dashboard-container {
+    width: 100%;
+    padding: 30px;
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.dashboard-header {
+    margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.controls-panel {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.control-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.graphs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.graph-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    height: 280px; /* Shorter cards since there are more of them */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.graph-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+@media (max-width: 900px) {
+    .graphs-grid {
+        grid-template-columns: 1fr;
+    }
+}
